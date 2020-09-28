@@ -52,7 +52,9 @@ export { typeRegistryMock as savedObjectsTypeRegistryMock } from './saved_object
 export { uiSettingsServiceMock } from './ui_settings/ui_settings_service.mock';
 export { metricsServiceMock } from './metrics/metrics_service.mock';
 export { renderingMock } from './rendering/rendering_service.mock';
+export { statusServiceMock } from './status/status_service.mock';
 export { contextServiceMock } from './context/context_service.mock';
+export { capabilitiesServiceMock } from './capabilities/capabilities_service.mock';
 
 export function pluginInitializerContextConfigMock<T>(config: T) {
   const globalConfig: SharedGlobalConfig = {
@@ -138,6 +140,7 @@ function createCoreSetupMock({
     uiSettings: uiSettingsMock,
     auditTrail: auditTrailServiceMock.createSetupContract(),
     logging: loggingServiceMock.createSetupContract(),
+    metrics: metricsServiceMock.createSetupContract(),
     getStartServices: jest
       .fn<Promise<[ReturnType<typeof createCoreStartMock>, object, any]>, []>()
       .mockResolvedValue([createCoreStartMock(), pluginStartDeps, pluginStartContract]),
@@ -174,6 +177,7 @@ function createInternalCoreSetupMock() {
     uiSettings: uiSettingsServiceMock.createSetupContract(),
     auditTrail: auditTrailServiceMock.createSetupContract(),
     logging: loggingServiceMock.createInternalSetupContract(),
+    metrics: metricsServiceMock.createInternalSetupContract(),
   };
   return setupDeps;
 }
@@ -183,7 +187,7 @@ function createInternalCoreStartMock() {
     capabilities: capabilitiesServiceMock.createStartContract(),
     elasticsearch: elasticsearchServiceMock.createInternalStart(),
     http: httpServiceMock.createInternalStartContract(),
-    metrics: metricsServiceMock.createStartContract(),
+    metrics: metricsServiceMock.createInternalStartContract(),
     savedObjects: savedObjectsServiceMock.createInternalStartContract(),
     uiSettings: uiSettingsServiceMock.createStartContract(),
     auditTrail: auditTrailServiceMock.createStartContract(),
